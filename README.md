@@ -71,5 +71,7 @@ yarn preview
 # bun
 bun run preview
 ```
+instal supabase tailwindcss pinia prisma
+npm i @nuxtjs/supabase @nuxtjs/tailwindcss @pinia/nuxt @prisma/client @vite-pwa/nuxt nuxt-icon prisma uuid
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
