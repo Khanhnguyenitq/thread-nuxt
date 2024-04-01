@@ -22,7 +22,7 @@
         <button @click="userStore.isMenuOverlay = true" class="w-full h-full">
           <Icon
             class="mb-1"
-            name="material-symbols:edit-square-outline-rounded"
+            name="material-symbols:edit-square-outline"
             size="32"
             color="#ffffff"
           />
@@ -37,5 +37,6 @@
 </template>
 
 <script setup>
-// import userStore from
+import { useUserStore } from '~/stores/user';
+const userStore = useUserStore()
 </script>
