@@ -3,8 +3,8 @@
     <div id="IndexPage" class="w-full overflow-auto">
       <div class="mx-auto max-w-[500px] overflow-hidden">
         <div id="Posts" class="px-4 max-w-[600px] mx-auto">
-          <div class="text-white" v-if="isPosts" v-for="post in posts" :key="post">
-            <Post :post="post" @isDeleted="posts = []" />
+          <div v-if="isPosts" v-for="post in posts" :key="post">
+            <Post :post="post" @isDeleted="posts = userStore.getAllPosts()" />
           </div>
           <div v-else>
             <client-only>
@@ -22,6 +22,7 @@
               </div>
             </client-only>
           </div>
+          <div class="mt-60" />
         </div>
       </div>
     </div>
@@ -30,22 +31,48 @@
 
 <script setup>
 import MainLayout from "~/layouts/MainLayout.vue";
-import { useUserStore } from "~/stores/user";
 
+import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
+const user = useSupabaseUser();
 
 let posts = ref([]);
-let isPosts = ref(true);
+let isPosts = ref(false);
 let isLoading = ref(false);
 
-onBeforeMount(() => {
-  posts.value = [
-    {
-      name: "nguyen",
-      image: "https://placehold.co/100",
-      text: "this is text",
-      picture: "https://placehold.co/500",
-    },
-  ];
+watchEffect(() => {
+  if (!user.value) {
+    return navigateTo("/login");
+  }
 });
+
+onBeforeMount(async () => {
+  try {
+    isLoading.value = true;
+    await userStore.getAllPosts();
+    isLoading.value = false;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+onMounted(() => {
+  watchEffect(() => {
+    if (userStore.posts && userStore.posts.length >= 1) {
+      posts.value = userStore.posts;
+      isPosts.value = true;
+    }
+  });
+});
+
+watch(
+  () => posts.value,
+  () => {
+    if (userStore.posts && userStore.posts.length >= 1) {
+      posts.value = userStore.posts;
+      isPosts.value = true;
+    }
+  },
+  { deep: true }
+);
 </script>

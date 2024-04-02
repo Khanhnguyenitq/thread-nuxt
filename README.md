@@ -73,5 +73,5 @@ bun run preview
 ```
 instal supabase tailwindcss pinia prisma
 npm i @nuxtjs/supabase @nuxtjs/tailwindcss @pinia/nuxt @prisma/client @vite-pwa/nuxt nuxt-icon prisma uuid
-
+npx prisma init, npx prima generate, npx prisma migrate dev --name init
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
