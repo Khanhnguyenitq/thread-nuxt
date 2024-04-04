@@ -96,12 +96,15 @@ import { useUserStore } from "~/stores/user";
 const userStore = useUserStore();
 
 const runtimeConfig = useRuntimeConfig();
+// định nghĩa trong nuxt.config.ts
+
 let isMenu = ref(false);
 let isLike = ref(false);
 let isDeleting = ref(false);
 
 const emit = defineEmits(["isDeleted"]);
 const props = defineProps({ post: Object });
+// post lấy từ bảng post
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
@@ -114,6 +117,7 @@ const hasLikedComputed = computed(() => {
       res = true;
     }
   });
+
 
   return res;
 });
